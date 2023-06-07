@@ -2,26 +2,30 @@ NAME = so_long
 CFLAGS = -Wall -Werror -Wextra
 AR = ar src
 LIBFT = ./libft/
-LIBRARY = ./libft/libft.a
+
+LIBRARIES = ./libft/libft.a ./mlx/libmlx.a
 OBJ_DIR = ./obj/
+MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 DEPS = $(addsuffix .d, $(basename $(OBJS)))
-SRC = 
+SRC = main.c
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -c $(CFLAGS) -MMD -I./ $< -o $@
+	$(CC) -c $(CFLAGS) -MMD -I./ -Imlx $< -o $@
 
 all: $(NAME)
 
-$(NAME) : $(OBJS)
-	@make -C $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -I./ -o $@
+$(NAME) : runlibs $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBRARIES) -I./ $(MLX_FLAGS) -o $@
 
 -include $(DEPS)
 
-.PHONY : clean fclean re all
+.PHONY : clean fclean re allv runlibft
 
+runlibs:
+	@make -C $(LIBFT)
+	@make -C mlx
 clean : 
 	@make clean -C libft
 	rm -rf $(OBJ_DIR)
