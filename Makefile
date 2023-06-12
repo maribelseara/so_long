@@ -8,7 +8,7 @@ OBJ_DIR = ./obj/
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 DEPS = $(addsuffix .d, $(basename $(OBJS)))
-SRC = main.c
+SRC = main.c window.c
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@mkdir -p $(OBJ_DIR)

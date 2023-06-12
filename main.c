@@ -2,15 +2,11 @@
 
 int main(void)
 {
-    void    *mlx;
-    void    *mlx_win;
+    t_window win;
 
-    mlx = mlx_init();
-    if (!mlx)
+    win = ft_new_instance(300,300,"So Long");
+    if (!win.mlx_ptr || !win.win_ptr)
         return (1);
-    mlx_win = mlx_new_window(mlx, 800, 600, "Hello World");
-    if (!mlx_win)
-        return (2);
-    mlx_loop(mlx);
+    mlx_loop(win.mlx_ptr);
     return (0);
 }
